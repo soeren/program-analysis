@@ -1,0 +1,37 @@
+// Check for dead code elimination
+// - Check that dead assignments are removed
+// - Check that liveness propagation is correct in/after IF/WHILE
+// statements
+// - Check that unused defines are removed
+
+program
+
+int y;
+int x;
+int z;
+int q;
+int w; // dead
+
+y := 1; // faint
+x := 3;
+y := y * x; // dead
+q := 42;
+z := 0;
+
+while (x < 6) {
+    x := x + 1;
+    z := y * y; // dead bcs of IF
+    if ( x > q)
+        z := 0;
+    else
+        z := 1;
+}
+
+y := z * q;
+if(z > 0){
+    y := 0;
+} else {
+    x := 0;
+}
+write(y*x);
+end

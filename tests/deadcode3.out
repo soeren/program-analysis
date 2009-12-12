@@ -1,0 +1,11 @@
+program
+int x;
+int toolong(int a) // 3
+{
+     int x;
+     x := a * a; // 4
+     return x; // 5
+ }
+x := toolong(7); // 1
+write(x); // 2
+end

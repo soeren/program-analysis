@@ -1,0 +1,28 @@
+// Check for dead code elimination
+// - Check intra-procedural dead code elimination
+// - Check that unused function are removed
+
+program
+
+int x;
+int y;
+
+int never(int a) { // dead function
+    int r;
+    r := a*2;
+    return r;
+}
+
+int stay(int b){
+    int e;
+    e := b * 12345; // dead statement
+    e := b - 1;
+    return e;
+}
+
+x := 11;
+y := stay(x);
+
+write(y);
+
+end

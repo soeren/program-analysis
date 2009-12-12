@@ -1,0 +1,35 @@
+// Check for program slicing
+// Point of interest: label 11 [c := -1 * c;]
+// - Check for correct intra-procedural slicing
+program
+
+int x;
+int y;
+
+int test(int a)
+{
+    int r;
+    int e;
+    int c;
+
+    r := a*2;
+    e := 42; // marked
+    c := e; // marked
+
+    while(e>0){ // marked
+        e := e -1; // marked
+        if(c > 0){ // marked
+            c := -1 * c; // PoI
+        } else {
+            c := c*2; // marked bcs of loop
+        }
+    }
+
+    return r*c;
+}
+
+x := 4;
+y := test(4);
+write(y);
+
+end

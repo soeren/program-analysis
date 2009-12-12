@@ -1,0 +1,29 @@
+program
+int y;
+int x;
+int z;
+int q;
+x := 3; // 1
+q := 42; // 2
+z := 0; // 3
+while(x < 6) // 4
+{
+     x := x + 1; // 5
+     if(x > q) // 6
+     {
+          z := 0; // 7
+      } else
+     {
+          z := 1; // 8
+      }
+ }
+y := z * q; // 9
+if(z > 0) // 10
+{
+     y := 0; // 11
+ } else
+{
+     x := 0; // 12
+ }
+write(y * x); // 13
+end

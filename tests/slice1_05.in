@@ -1,0 +1,33 @@
+// Check for program slicing
+// Point of interest: label 5 [y := x + y;]
+// - Check for correct slicing inside a program w/o methods
+
+program
+
+int x;
+int y;
+int z;
+int q;
+
+y := 1; // marked
+x := 3; // marked
+q := 3 + y;
+while ( y < 6) { // marked
+    y := x + y; // PoI
+    z := y - 2; // marked bcs of loop
+    q := y * z; // marked bcs of loop
+    if ( z < 4){ // marked bcs of loop
+        if ( z > 3){ // marked bcs of loop
+            z := y * 2;
+            x := 0; // marked bcs of loop
+        } else {
+            x := 2; // marked bcs of loop
+        }
+    } else {
+        x := 3; // marked bcs of loop
+    }
+}
+
+write(x);
+
+end

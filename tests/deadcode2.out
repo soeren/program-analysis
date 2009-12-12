@@ -1,0 +1,13 @@
+program
+int x;
+int y;
+int stay(int b) // 4
+{
+     int e;
+     e := b - 1; // 5
+     return e; // 6
+ }
+x := 11; // 1
+y := stay(x); // 2
+write(y); // 3
+end

@@ -1,0 +1,44 @@
+// Check for dead code elimination
+// - Check for correct inter-procedural elinimination
+// - Check that dead branches are removed
+
+program
+
+int x;
+int y;
+int z;
+
+int stub(int a){
+    int f; // dead
+    f := a*a; // dead
+    if(false){
+        return a*a; // dead branch -> only ELSE branch should stay
+    } else {
+        return a;
+    }
+}
+
+x := stub(123);
+y := 666 * x;
+
+if(true){
+    z := 42;
+    x := 11;
+} else { // dead branch
+    z := 0;
+}
+
+x := 77*z;
+
+while(false){ // dead branch
+    z := stub(x);
+}
+
+while(x > y){ // stays unchanged
+    x := x - 2;
+    x := x - 1;
+}
+
+write(x);
+
+end

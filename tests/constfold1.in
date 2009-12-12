@@ -1,0 +1,57 @@
+// Test for constant folding:
+// - Check if arithmetical expressions containing constants are folded
+// - Check that boolean expressions containing constants in IF or
+// WHILE are folded
+// - Check correctness of constant propagation in/after WHILE and IF statements
+
+program
+
+int x;
+int y;
+int z;
+
+x := 23;
+y := 42;
+z := x*2; // should be 46
+
+if(z > y){ // should be folded to if(true)
+    y := 0;
+} else {
+    y := 1;
+}
+
+if(y = 0){ // should stay the same (y not a const anymore)
+    y := 1;
+} else {
+    y := 0;
+}
+
+while(y > 0){
+    while(z < 0){ // z stays const during while -> folding to false
+        y := y +1;
+    }
+    y := y -1;
+}
+
+while(z > 0){ // z not a const in WHILE loop -> stay the same
+    z := z -1;
+    if(z = x){ // x is const -> folding to if(z=23)
+        y := 0;
+    } else {
+        y := 1;
+    }
+}
+
+while(z > 0){ // no more consts, stays the same
+    z := z -1;
+    if(z = x){
+        x := 23;
+    } else {
+        x := 42;
+    }
+}
+
+
+write(x);
+
+end

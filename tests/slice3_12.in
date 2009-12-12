@@ -1,0 +1,33 @@
+// Check for program slicing
+// Point of interest: label 12 [result := result * base;]
+// - Check for correct inter-procedural slicing when PoI is inside a
+// function
+
+program
+
+int x;
+int y;
+int z;
+
+int pow(int base, int pow) // marked bcs PoI depends on argument
+{
+    int result;
+    result := 1; // marked
+    while (pow > 0) { // marked
+        result := result * base; // PoI
+    }
+    return result;
+}
+
+z := 23; // marked bcs arg depends on this
+if(z > 0){
+    y := 0;
+} else {
+    y := 1;
+}
+x := 4*z; // marked bcs arg depends on this
+y := x*2;
+z := pow(x, 3); // marked (inter-proc)
+write(z);
+
+end

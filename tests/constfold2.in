@@ -1,0 +1,45 @@
+// Test for constant folding
+// - Check intra procedural folding
+
+program
+
+int x;
+
+int foldme(int a, int b){
+    int y;
+    int z;
+    int r;
+
+    y := 23;
+    z := 42;
+    r := y * z; // should be folded to 966
+
+    if(r > a){ // a not const -> folding to if(966 > a)
+        y := b; // b not const -> stay the same
+    } else {
+        z := b; // b not const -> stay the same
+    }
+
+    r := r - 666; // r is const -> folding to 300
+
+    while(b > y | b > z){
+        r := r -1; // r not const anymore -> no folding
+    }
+
+    return r; // r not const anymore -> no folding
+}
+
+int givefive(int a){
+    int q;
+    int w;
+
+    q:=1;
+    w:=3;
+
+    return q*w; // q and w const -> folding to 3
+}
+
+x := foldme(1,2) + givefive(0);
+write(x);
+
+end

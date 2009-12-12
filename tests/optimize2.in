@@ -1,0 +1,39 @@
+// Check for program optimization
+// - Check that sequence of constant folding plus dead code
+// elimination removes fainted variables and reduces code to a minimum
+
+program
+int v;
+int f;
+int b;
+int x;
+int z;
+int r;
+int u;
+int s;
+int t;
+
+int hello(int a, int b){
+    int t;
+    int s;
+    t := a - b;
+    s := 42;
+	return s;
+}
+
+int hello233(int a, int c){
+    int t;
+    t := a - hello233(a, c);
+	return a;
+}
+
+v := 2 + 2;
+x := hello(v*2, 23);
+
+if (v < 2)
+    x := 23;
+else
+    x := 42;
+
+write x;
+end

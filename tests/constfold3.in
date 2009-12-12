@@ -1,0 +1,47 @@
+// Check for constant folding
+// - Check inter-procedural folding
+
+program
+
+int x;
+int y;
+int z;
+
+int identity(int b) { // if called with const arg should return arg
+    return b;
+}
+
+int givethree(int a) {
+    int t;
+    int r;
+    t := 3;
+    r := a*t; // a and t const -> fold to 3
+    return t; // t const -> fold to 3 -> function returns const value
+}
+
+int diff(int a, int b){ // only const if both arguments are const
+    int s;
+    int y;
+    y := a - b;
+    s := y;
+    return s;
+}
+
+x := diff(4,2); // should be folded to 2, since both args are const
+y := 3;
+
+if(y > x){ // both const -> should be folded to true
+    x := x*identity(y); // both const -> should be folded to 6
+} else {
+    x := 0;
+}
+
+while(x > 0){ // x not const anymore -> stays the same
+    y := y * givethree(0); // y not const anymore, but func -> func is folded
+}
+
+x := y - x; // no consts -> stays the same
+
+write(x); // no consts -> stays the same
+
+end

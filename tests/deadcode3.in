@@ -1,0 +1,21 @@
+// Check for dead code elimination
+// - Check that dead code after a  return statement is removed
+
+program
+
+int x;
+
+int toolong(int a){
+    int x;
+    int y;
+    x := a*a;
+    return x;
+    y := x*42; // dead
+    x := y*23; // dead
+}
+
+x := toolong(7);
+
+write(x);
+
+end

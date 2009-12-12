@@ -1,0 +1,11 @@
+program
+int x;
+int y;
+y := 3; // 1
+while(true) // 2
+{
+     y := y * 3; // 3
+ }
+x := y - 6; // 4
+write(x); // 5
+end

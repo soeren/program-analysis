@@ -1,0 +1,48 @@
+// Check for program optimization
+// - Check that sequence of constant folding plus dead code
+// elimination removes fainted variables and reduces code to a minimum
+
+program
+
+int x;
+int y;
+int z;
+
+int identity(int b) {
+    return b;
+}
+
+int givethree(int a) {
+    int t;
+    int r;
+    t := 3;
+    r := a*t;
+    return t;
+}
+
+int diff(int a, int b){
+    int s;
+    int y;
+    y := a - b;
+    s := y;
+    return s;
+}
+
+x := diff(4,2);
+y := 3;
+
+if(y > x){
+    x := x*identity(y);
+} else {
+    x := 0;
+}
+
+while(x > 0){
+    y := y * givethree(0);
+}
+
+x := y - x;
+
+write(x);
+
+end

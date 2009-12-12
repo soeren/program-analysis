@@ -1,0 +1,36 @@
+// Check for program slicing
+// Point of interest: label 7 [write(pow(x,y));]
+// - Check for correct inter-procedural slicing when PoI includes a
+// function call
+
+program
+
+int x;
+int y;
+int z;
+
+int double(int a){ // marked (required for a marked value)
+    return a*2;
+}
+
+int pow(int base, int pow) // marked (called in PoI)
+{
+    int result;
+    result := 1;
+    while (pow > 0) {
+        result := result * base;
+    }
+    return result;
+}
+
+z := double(23); // marked
+if(z > 0){
+    y := 0;
+} else {
+    y := 1;
+}
+x := 4*z; // marked
+y := x*2; // marked
+write(pow(x,y)); // PoI
+
+end
